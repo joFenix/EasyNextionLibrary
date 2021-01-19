@@ -141,7 +141,7 @@ String EasyNex::readStr(String TextComponent){
         if(_serial->available()){
           _tempChar = _serial->read();  // Read the first byte of the Serial
          
-          if(_tempChar == 0xFF || _tempChar == 0xFFFFFFFF){  // If the read byte is the end command byte, 
+          if(_tempChar == 0xFF || _tempChar == 0x100){  // If the read byte is the end command byte, 
             _endBytes++ ;      // Add one to the _endBytes counter
             if(_endBytes == 3){  
               _endOfCommandFound = true;  // If the counter is equal to 3, we have the end command
@@ -242,7 +242,7 @@ uint32_t EasyNex::readNumber(String component){
         
         _tempChar = _serial->read();  // Read the next byte of the Serial
          
-        if(_tempChar == 0xFF || _tempChar == 0xFFFFFFFF){  // If the read byte is the end command byte, 
+        if(_tempChar == 0xFF || _tempChar == 0x100){  // If the read byte is the end command byte, 
           _endBytes++ ;      // Add one to the _endBytes counter
           if(_endBytes == 3){  
             _endOfCommandFound = true;  // If the counter is equal to 3, we have the end command
@@ -261,7 +261,7 @@ uint32_t EasyNex::readNumber(String component){
     }
   }
   
-  if(_endOfCommandFound = true){
+  if(_endOfCommandFound == true){
     // We can continue with the little endian conversion
     _numberValue = _numericBuffer[3];
     _numberValue <<= 8;
@@ -307,7 +307,7 @@ void EasyNex::NextionListen(){
     _tmr1 = millis();
     
     while(_start_char != '#'){            
-      _start_char = _serial->read();        // whille the start_char is not the start command symbol 
+      _start_char = _serial->read();        // while the start_char is not the start command symbol 
                                            //  read the serial (when we read the serial the byte is deleted from the Serial buffer)
       if((millis() - _tmr1) > 100UL){     //   Waiting... But not forever...... 
         break;                            

@@ -28,7 +28,7 @@
 #ifndef trigger_h
 #define trigger_h
 
-// weak attribute funcion for read the custom command protocol
+// weak attribute function for read the custom command protocol
 
 extern void easyNexReadCustomCommand();
 extern void easyNexReadCustomCommand() __attribute__((weak));
